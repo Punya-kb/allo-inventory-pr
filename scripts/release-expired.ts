@@ -1,11 +1,3 @@
-/**
- * Releases expired inventory reservations.
- *
- * This script can be run manually or from an external scheduler
- * (GitHub Actions, Railway Cron, Linux cron, etc.).
- * It performs the same cleanup as the /api/cron/release-expired endpoint.
- */
-
 import { prisma } from "../src/lib/prisma";
 import { releaseExpiredReservations } from "../src/lib/reservations";
 
