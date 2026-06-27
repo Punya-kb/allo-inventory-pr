@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+﻿import { NextRequest, NextResponse } from 'next/server';
 import {
   confirmReservation,
   ReservationExpiredError,
@@ -8,10 +8,9 @@ import { withIdempotency } from '@/lib/idempotency';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const idempotencyKey = req.headers.get('Idempotency-Key');
-
-  const { status, body, replayed } = await withIdempotency(
+  const { status, body, replayed } = await withIdempotency<{ reservation?: unknown; error?: string }>(
     idempotencyKey,
-    `POST /api/reservations/${params.id}/confirm`,
+    POST /api/reservations//confirm,
     async () => {
       try {
         const reservation = await confirmReservation(params.id);
@@ -27,7 +26,6 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       }
     }
   );
-
   const res = NextResponse.json(body, { status });
   if (replayed) res.headers.set('Idempotent-Replayed', 'true');
   return res;
