@@ -1,20 +1,26 @@
 /**
- * Alternative to Vercel Cron: run this on a schedule (crontab, GitHub
- * Actions scheduled workflow, Railway cron, etc.) if you're not deploying
- * on Vercel. Does the same sweep as /api/cron/release-expired.
+ * Releases expired inventory reservations.
  *
- *   
+ * This script can be run manually or from an external scheduler
+ * (GitHub Actions, Railway Cron, Linux cron, etc.).
+ * It performs the same cleanup as the /api/cron/release-expired endpoint.
  */
-import { prisma } from '../src/lib/prisma';
-import { releaseExpiredReservations } from '../src/lib/reservations';
+
+import { prisma } from "../src/lib/prisma";
+import { releaseExpiredReservations } from "../src/lib/reservations";
 
 async function main() {
   const count = await releaseExpiredReservations(prisma);
-  console.log(`[release-expired] released ${count} expired reservation(s) at ${new Date().toISOString()}`);
+
+  console.log(
+    `[release-expired] Released ${count} expired reservation(s) at ${new Date().toISOString()}`
+  );
+
   await prisma.$disconnect();
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error(err);
+  await prisma.$disconnect();
   process.exit(1);
 });
