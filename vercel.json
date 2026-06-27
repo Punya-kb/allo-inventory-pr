@@ -1,12 +1,8 @@
-@"
 {
   "crons": [
     {
       "path": "/api/cron/release-expired",
-      "schedule": "* * * * *"
+      "schedule": "0 0 * * *"
     }
-  ],
-  "buildCommand": "next build",
-  "cleanUrls": true
+  ]
 }
-"@ | Set-Content vercel.json
