@@ -1,3 +1,8 @@
+/**
+ * Release expired inventory reservations.
+ * This script performs the same cleanup as the cron endpoint.
+ */
+
 import { prisma } from "../src/lib/prisma";
 import { releaseExpiredReservations } from "../src/lib/reservations";
 
