@@ -3,7 +3,7 @@
  * Actions scheduled workflow, Railway cron, etc.) if you're not deploying
  * on Vercel. Does the same sweep as /api/cron/release-expired.
  *
- *   */1 * * * *  cd /app && npm run cron:release-expired
+ *   
  */
 import { prisma } from '../src/lib/prisma';
 import { releaseExpiredReservations } from '../src/lib/reservations';
